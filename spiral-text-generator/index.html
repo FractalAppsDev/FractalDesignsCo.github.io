@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FractalDesignsCo Spiral Text Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6366F1",
+                        accent: "#A5B4FC",
+                        background: "#F3F4F6",
+                        foreground: "#1F2937",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6;
+            color: #1F2937;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="flex justify-center items-center min-h-screen p-4">
+    <div class="container">
+        <h1 class="text-2xl font-bold text-center mb-6">
+            <a href="https://www.etsy.com/shop/FractalDesignsCo" target="_blank"
+                class="text-primary underline">FractalDesignsCo</a> Spiral Text Generator
+        </h1>
+
+        <div class="flex flex-col gap-4">
+            <textarea id="textInput" placeholder="Enter song lyrics..."
+                class="w-full p-3 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+                rows="4"></textarea>
+
+            <div class="flex flex-col items-center">
+                <label class="block font-medium mb-1 text-center">Font</label>
+                <select id="fontSelector"
+                    class="w-1/4 p-2 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none mx-auto">
+                    <option value="Roboto">Roboto</option>
+                    <option value="Open Sans">Open Sans</option>
+                    <option value="Lato">Lato</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Oswald">Oswald</option>
+                    <option value="Source Sans Pro">Source Sans Pro</option>
+                    <option value="Raleway">Raleway</option>
+                    <option value="PT Sans">PT Sans</option>
+                    <option value="Merriweather">Merriweather</option>
+                    <option value="Noto Sans">Noto Sans</option>
+                    <option value="Nunito">Nunito</option>
+                    <option value="Quicksand">Quicksand</option>
+                    <option value="Comfortaa">Comfortaa</option>
+                    <option value="Playfair Display">Playfair Display</option>
+                    <option value="Cabin">Cabin</option>
+                    <option value="Arvo">Arvo</option>
+                    <option value="Dosis">Dosis</option>
+                    <option value="Fira Sans">Fira Sans</option>
+                    <option value="Hind">Hind</option>
+                    <option value="Inconsolata">Inconsolata</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Tahoma">Tahoma</option>
+                    <option value="Trebuchet MS">Trebuchet MS</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Lucida Console">Lucida Console</option>
+                    <option value="Garamond">Garamond</option>
+                    <option value="Palatino">Palatino</option>
+                </select>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <label class="block font-medium mb-1">Font Color</label>
+                <input type="color" id="fontColor" class="w-1/8 h-10 border rounded-md cursor-pointer">
+            </div>
+
+            <!-- Sliders with Reset Buttons -->
+            <div class="flex flex-col items-center">
+                <label class="block font-medium mb-1 text-center">Letter Spacing</label>
+                <div class="flex items-center gap-2">
+                    <span id="letterSpacingValue" class="w-1/4 text-center">11.5</span>
+                    <input type="range" id="letterSpacing" min="1" max="20" step="0.5" value="11.5"
+                        class="w-3/4 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                    <button onclick="resetSlider('letterSpacing', 11.5)"
+                        class="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 transition">↺</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <label class="block font-medium mb-1 text-center">Middle Circle Size</label>
+                <div class="flex items-center gap-2">
+                    <span id="startRingValue" class="w-1/4 text-center">200</span>
+                    <input type="range" id="startRing" min="0" max="300" value="200"
+                        class="w-3/4 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                    <button onclick="resetSlider('startRing', 200)"
+                        class="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 transition">↺</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <label class="block font-medium mb-1 text-center">White Space Between Loops</label>
+                <div class="flex items-center gap-2">
+                    <span id="loopSpacingValue" class="w-1/4 text-center">0.3</span>
+                    <input type="range" id="loopSpacing" min="0.2" max="0.5" step="0.1" value="0.3"
+                        class="w-3/4 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer">
+                    <button onclick="resetSlider('loopSpacing', 0.3)"
+                        class="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 transition">↺</button>
+                </div>
+            </div>
+
+            <script>
+                let letterSpacingValue = document.getElementById('letterSpacingValue');
+                let letterSpacing = document.getElementById('letterSpacing');
+                letterSpacing.oninput = function () {
+                    letterSpacingValue.textContent = letterSpacing.value;
+                };
+
+                let startRingValue = document.getElementById('startRingValue');
+                let startRing = document.getElementById('startRing');
+                startRing.oninput = function () {
+                    startRingValue.textContent = startRing.value;
+                };
+
+                let loopSpacingValue = document.getElementById('loopSpacingValue');
+                let loopSpacing = document.getElementById('loopSpacing');
+                loopSpacing.oninput = function () {
+                    loopSpacingValue.textContent = loopSpacing.value;
+                };
+            </script>
+
+            <!-- Buttons -->
+            <div class="flex gap-4">
+                <button id="boldButton"
+                    class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition">
+                    Bold/Unbold
+                </button>
+                <button onclick="downloadSVG()"
+                    class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition">
+                    Download SVG
+                </button>
+            </div>
+        </div>
+
+        <div id="preview-container" class="mt-6 flex justify-center overflow-hidden">
+            <svg id="preview" width="800" height="800"></svg>
+        </div>
+    </div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const fontSelector = document.getElementById('fontSelector');
+        const fontColorInput = document.getElementById('fontColor');
+        const letterSpacingInput = document.getElementById('letterSpacing');
+        const startRingInput = document.getElementById('startRing');
+        const loopSpacingInput = document.getElementById('loopSpacing');
+        const preview = document.getElementById('preview');
+        const boldButton = document.getElementById('boldButton');
+
+        let isBold = false;
+
+
+        function loadFont(fontName) {
+            const formattedFontName = fontName.replace(/ /g, '+'); // Replace spaces with '+'
+            const fontUrl = `https://fonts.googleapis.com/css2?family=${formattedFontName}:wght@400;700&display=swap`;
+
+            // Check if the font is already loaded
+            if (!document.querySelector(`link[href="${fontUrl}"]`)) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = fontUrl;
+                document.head.appendChild(link);
+            }
+        }
+
+
+        function updatePreview() {
+            const text = textInput.value;
+            const fontSize = 18;
+            const selectedFont = fontSelector.value;
+            const fontColor = fontColorInput.value;
+            const letterSpacing = parseFloat(letterSpacingInput.value);
+            const startRing = parseFloat(startRingInput.value);
+            const loopSpacing = parseFloat(loopSpacingInput.value);
+
+            // Load the selected font dynamically
+            loadFont(selectedFont);
+
+            preview.innerHTML = '';
+
+            let angle = 0;
+            let radius = startRing;
+            const a = loopSpacing * fontSize;
+            let maxRadius = startRing;
+
+            const fontWeight = isBold ? 'bold' : 'normal';
+
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                radius = startRing + a * angle;
+                const x = 400 + radius * Math.cos(angle);
+                const y = 400 + radius * Math.sin(angle);
+                const rotation = (angle * 180 / Math.PI) + 90;
+
+                const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                textElement.setAttribute('x', x);
+                textElement.setAttribute('y', y);
+                textElement.setAttribute('font-size', fontSize);
+                textElement.setAttribute('fill', fontColor);
+                textElement.setAttribute('font-family', selectedFont); // Ensure font is applied
+                textElement.setAttribute('font-weight', fontWeight);
+                textElement.setAttribute('text-anchor', 'middle');
+                textElement.setAttribute('dominant-baseline', 'middle');
+                textElement.setAttribute('transform', `rotate(${rotation}, ${x}, ${y})`);
+                textElement.textContent = char;
+
+                preview.appendChild(textElement);
+
+                angle += letterSpacing / (radius + 1);
+                if (radius > maxRadius) maxRadius = radius;
+            }
+
+            const viewboxSize = Math.max(800, maxRadius * 2.25);
+            preview.setAttribute('viewBox', `${400 - viewboxSize / 2} ${400 - viewboxSize / 2} ${viewboxSize} ${viewboxSize}`);
+        }
+
+
+        function resetSlider(id, defaultValue) {
+            document.getElementById(id).value = defaultValue;
+            document.getElementById(`${id}Value`).textContent = defaultValue;
+
+            updatePreview();
+        }
+
+        boldButton.addEventListener('click', () => {
+            isBold = !isBold;
+            updatePreview();
+        });
+
+        function downloadSVG() {
+            const svgData = new XMLSerializer().serializeToString(preview);
+            const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'spiral_text.svg';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        textInput.addEventListener('input', updatePreview);
+        fontSelector.addEventListener('change', updatePreview);
+
+        fontColorInput.addEventListener('input', updatePreview);
+        letterSpacingInput.addEventListener('input', updatePreview);
+        startRingInput.addEventListener('input', updatePreview);
+        loopSpacingInput.addEventListener('input', updatePreview);
+
+        updatePreview();
+    </script>
+</body>
+
+</html>
