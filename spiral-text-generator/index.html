@@ -134,6 +134,26 @@
                 </label>
             </div>
 
+            <script>
+                let letterSpacingValue = document.getElementById('letterSpacingValue');
+                let letterSpacing = document.getElementById('letterSpacing');
+                letterSpacing.oninput = function () {
+                    letterSpacingValue.textContent = letterSpacing.value;
+                };
+
+                let startRingValue = document.getElementById('startRingValue');
+                let startRing = document.getElementById('startRing');
+                startRing.oninput = function () {
+                    startRingValue.textContent = startRing.value;
+                };
+
+                let loopSpacingValue = document.getElementById('loopSpacingValue');
+                let loopSpacing = document.getElementById('loopSpacing');
+                loopSpacing.oninput = function () {
+                    loopSpacingValue.textContent = loopSpacing.value;
+                };
+            </script>
+
             <!-- Buttons -->
             <div class="flex gap-4">
 
