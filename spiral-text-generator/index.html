@@ -57,6 +57,16 @@
                 rows="4" oninput="preserveCursor(this)"
                 onpaste="setTimeout(() => { preserveCursor(this); }, 0);"></textarea>
 
+
+            <script>
+                function preserveCursor(textarea) {
+                    const start = textarea.selectionStart;
+                    const end = textarea.selectionEnd;
+                    textarea.value = textarea.value.replace(/(\r\n|\n|\r)/gm, ' ').replace(/ {2,}/g, ' ');
+                    textarea.setSelectionRange(start, end);
+                }
+            </script>
+
             <div class="flex flex-col items-center">
                 <label class="block font-medium mb-1 text-center select-none">Font</label>
                 <select id="fontSelector"
