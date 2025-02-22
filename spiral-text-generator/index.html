@@ -47,7 +47,8 @@
     <div class="container">
         <h1 class="text-2xl font-bold text-center mb-6">
             <a href="https://www.etsy.com/shop/FractalDesignsCo" target="_blank"
-                class="text-primary underline">FractalDesignsCo</a> Spiral Text Generator
+                class="text-primary underline">FractalDesignsCo</a> <span class="select-none">Spiral Text
+                Generator</span>
         </h1>
 
         <div class="flex flex-col gap-4">
@@ -66,9 +67,9 @@
             </script>
 
             <div class="flex flex-col items-center">
-                <label class="block font-medium mb-1 text-center">Font</label>
+                <label class="block font-medium mb-1 text-center select-none">Font</label>
                 <select id="fontSelector"
-                    class="w-1/4 p-2 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none mx-auto">
+                    class="w-1/4 p-2 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none mx-auto cursor-pointer">
                     <option value="Roboto Mono">Roboto Mono</option>
                     <option value="Source Code Pro">Source Code Pro</option>
                     <option value="Fira Code">Fira Code</option>
@@ -87,13 +88,13 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <label class="block font-medium mb-1">Font Color</label>
+                <label class="block font-medium mb-1 select-none">Font Color</label>
                 <input type="color" id="fontColor" class="w-1/8 h-10 border rounded-md cursor-pointer">
             </div>
 
             <!-- Sliders with Reset Buttons -->
             <div class="flex flex-col items-center">
-                <label class="block font-medium mb-1 text-center">Letter Spacing</label>
+                <label class="block font-medium mb-1 text-center select-none">Letter Spacing</label>
                 <div class="flex items-center gap-2">
                     <span id="letterSpacingValue" class="w-1/4 text-center">11.5</span>
                     <input type="range" id="letterSpacing" min="1" max="20" step="0.5" value="11.5"
@@ -104,7 +105,7 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <label class="block font-medium mb-1 text-center">Middle Circle Size</label>
+                <label class="block font-medium mb-1 text-center select-none">Middle Circle Size</label>
                 <div class="flex items-center gap-2">
                     <span id="startRingValue" class="w-1/4 text-center">200</span>
                     <input type="range" id="startRing" min="0" max="300" value="200"
@@ -115,7 +116,7 @@
             </div>
 
             <div class="flex flex-col items-center">
-                <label class="block font-medium mb-1 text-center">White Space Between Loops</label>
+                <label class="block font-medium mb-1 text-center select-none">White Space Between Loops</label>
                 <div class="flex items-center gap-2">
                     <span id="loopSpacingValue" class="w-1/4 text-center">0.3</span>
                     <input type="range" id="loopSpacing" min="0.2" max="0.5" step="0.1" value="0.3"
@@ -123,6 +124,13 @@
                     <button onclick="resetSlider('loopSpacing', 0.3)"
                         class="px-2 py-1 text-sm bg-gray-200 rounded hover:bg-gray-300 transition">↺</button>
                 </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <label class="flex items-center gap-2 justify-center cursor-pointer select-none">
+                    <input type="checkbox" id="boldButton" class="form-checkbox h-5 w-5 text-primary cursor-pointer">
+                    <span class="text-gray-700 select-none">Bold</span>
+                </label>
             </div>
 
             <script>
@@ -147,10 +155,7 @@
 
             <!-- Buttons -->
             <div class="flex gap-4">
-                <button id="boldButton"
-                    class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition">
-                    Bold/Unbold
-                </button>
+
                 <button onclick="downloadSVG()"
                     class="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-accent transition">
                     Download SVG
